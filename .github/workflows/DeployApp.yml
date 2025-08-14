@@ -49,7 +49,7 @@ jobs:
 
       - name: Update ECS service
         run: |
-          aws ecs update-service --cluster pleasant-gorilla-d4izrb --service nestjs-task-service-0wppag78 --force-new-deployment
+          aws ecs update-service --cluster pleasant-gorilla-d4izrb --service nestjs-task-service-1h8ko1zz --force-new-deployment
 
       # - name: Deploy to ECS
       #   uses: imehedi/actions-awscli-v2@latest
