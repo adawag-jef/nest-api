@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - main
+      - master
 env:
   AWS_REGION: ap-southeast-1
   ECR_REPOSITORY: nest-api
