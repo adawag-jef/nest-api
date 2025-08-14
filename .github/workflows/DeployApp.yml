@@ -110,7 +110,7 @@ jobs:
       - name: Deploy to ECS
         uses: imehedi/actions-awscli-v2@latest
         with:
-          args: ecs update-service --cluster pleasant-gorilla-d4izrb --service nestjs-task-service-0wppag78 --force-new-deployment
+          args: ecs update-service --cluster pleasant-gorilla-d4izrb --service nestjs-task-service-nxx3q4lu --force-new-deployment
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
