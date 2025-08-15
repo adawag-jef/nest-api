@@ -95,7 +95,6 @@ jobs:
           echo "Running the container..."
           sudo docker run -d \
             --name nestjs-container \
-            --env-file  /path/to/dot/env \
             -p 3000:3000 686255981564.dkr.ecr.ap-southeast-1.amazonaws.com/nest-api:latest
 
 
