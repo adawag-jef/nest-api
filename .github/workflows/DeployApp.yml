@@ -89,14 +89,14 @@ jobs:
           echo "Logged in successful..."
   
           echo "Pulling  image from ECR..."
-          echo "Docker pull command: docker pull \"686255981564.dkr.ecr.ap-southeast-1.amazonaws.com/nest-api:latest\""
+          echo "Docker pull command: sudo docker pull \"686255981564.dkr.ecr.ap-southeast-1.amazonaws.com/nest-api:latest\""
           echo "Docker pull completed..."
   
           echo "Running the container..."
-          docker run -d \
+          sudo docker run -d \
             --name nestjs-container \
             --env-file  /path/to/dot/env \
-            -p ${{ secrets.EXPOSED_PORT }}:${{ secrets.APPLICATION_PORT }} "${{ secrets.AWS_REGISTRY_URL }}/${{ secrets.REPOSITORY_NAME }}:${{ env.TAG }}"
+            -p 3000:3000 686255981564.dkr.ecr.ap-southeast-1.amazonaws.com/nest-api:latest
 
 
 
