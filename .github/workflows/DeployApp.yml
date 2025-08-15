@@ -93,7 +93,7 @@ jobs:
           echo "Docker pull command: sudo docker pull \"686255981564.dkr.ecr.ap-southeast-1.amazonaws.com/nest-api:latest\""
           echo "Docker pull completed..."
 
-          docker images
+          sudo docker images
   
           echo "Running the container..."
           sudo docker run -d \
