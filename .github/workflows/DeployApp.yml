@@ -43,10 +43,20 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-southeast-1
 
-    - name: Push Docker image to Amazon ECR
+    # - name: Push Docker image to Amazon ECR
+    #   run: |
+    #     aws ecr get-login-password --region af-south-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_REGISTRY_URL }}
+    #     docker push "${{ secrets.AWS_REGISTRY_URL }}/${{ secrets.REPOSITORY_NAME }}:${TAG}"
+
+    - name: Login to Amazon ECR
       run: |
-        aws ecr get-login-password --region af-south-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_REGISTRY_URL }}
-        docker push "${{ secrets.AWS_REGISTRY_URL }}/${{ secrets.REPOSITORY_NAME }}:${TAG}"
+        aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+
+    - name: Build and push Docker image
+      run: |
+        docker buildx create --use
+        docker buildx inspect --bootstrap
+        docker buildx build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_IMAGE:latest --push .
 
     - name: SSH into EC2 instance and deploy
       uses: appleboy/ssh-action@master
@@ -75,11 +85,11 @@ jobs:
           export AWS_REGION=${AWS_REGION}
   
           echo "Logging in to ECR...."
-          aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin 817722091681.dkr.ecr.af-south-1.amazonaws.com
+          aws  ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
           echo "Logged in successful..."
   
           echo "Pulling  image from ECR..."
-          echo "Docker pull command: docker pull \"${{ secrets.AWS_REGISTRY_URL }}/${{ secrets.REPOSITORY_NAME }}:${{ env.TAG }}\""
+          echo "Docker pull command: docker pull \"${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_IMAGE:latest\""
           echo "Docker pull completed..."
   
           echo "Running the container..."
