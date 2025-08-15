@@ -47,9 +47,13 @@ jobs:
           docker buildx inspect --bootstrap
           docker buildx build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_IMAGE:latest --push .
 
-      - name: Download task definition 
-        run: |
-          aws ecs describe-task-definition - task-definition nestjs-task - query taskDefinition > task-definition.json
+      - name: Deploy to Amazon ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: .aws/task-definition.json
+          service: nestjs-task-service
+          cluster: nest-cluster
+          wait-for-service-stability: true
 
       # - name: Fill in new image ID in task definition
       #   id: task-def
