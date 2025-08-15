@@ -90,10 +90,8 @@ jobs:
           echo "Logged in successful..."
   
           echo "Pulling  image from ECR..."
-          echo "Docker pull command: sudo docker pull \"686255981564.dkr.ecr.ap-southeast-1.amazonaws.com/nest-api:latest\""
+          sudo docker pull 686255981564.dkr.ecr.ap-southeast-1.amazonaws.com/nest-api:latest
           echo "Docker pull completed..."
-
-          sudo docker images
   
           echo "Running the container..."
           sudo docker run -d \
