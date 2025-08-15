@@ -47,10 +47,10 @@ jobs:
             echo "Docker version: $(docker --version)"
 
             echo "Stop the current running container if exist..."
-            docker stop nest-api || true
+            sudo docker stop nest-api || true
 
             echo "Remove the previous container..."
-            docker rm nest-api || true
+            sudo docker rm nest-api || true
 
             echo "AWS credentials set...."
             export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
@@ -62,11 +62,11 @@ jobs:
             echo "Logged in successful..."
 
             echo "Pulling  image from ECR..."
-            docker pull 686255981564.dkr.ecr.ap-southeast-1.amazonaws.com/nest-api:latest
+            sudo docker pull 686255981564.dkr.ecr.ap-southeast-1.amazonaws.com/nest-api:latest
             echo "Docker pull completed..."
 
             echo "Running the container..."
-            docker run -d \
+            sudo docker run -d \
               --name nest-api \
               -p 80:3000 686255981564.dkr.ecr.ap-southeast-1.amazonaws.com/nest-api:latest
 
