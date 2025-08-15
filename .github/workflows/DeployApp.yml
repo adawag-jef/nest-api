@@ -51,20 +51,20 @@ jobs:
         run: |
           aws ecs describe-task-definition - task-definition etap-development - query taskDefinition > task-definition.json
 
-      - name: Fill in new image ID in task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-        task-definition: task-definition.json 
-        container-name: nestjs-container 
-        image: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_IMAGE:latest
+      # - name: Fill in new image ID in task definition
+      #   id: task-def
+      #   uses: aws-actions/amazon-ecs-render-task-definition@v1
+      #   with:
+      #   task-definition: task-definition.json 
+      #   container-name: nestjs-container 
+      #   image: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_IMAGE:latest
 
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1 
-        with:
-        task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: nestjs-task-service
-        cluster: nest-cluster
+      # - name: Deploy Amazon ECS task definition
+      #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1 
+      #   with:
+      #   task-definition: ${{ steps.task-def.outputs.task-definition }}
+      #   service: nestjs-task-service
+      #   cluster: nest-cluster
 
       # - name: Update ECS service
       #   run: |
