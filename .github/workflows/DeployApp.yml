@@ -47,9 +47,11 @@ jobs:
 
             echo "Stop the current running container if exist..."
             sudo docker stop nest-api || true
+            sudo docker stop pgadmin || true
 
             echo "Remove the previous container..."
             sudo docker rm nest-api || true
+            sudo docker rm pgadmin || true
 
             echo "Logging in to ECR...."
             aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 686255981564.dkr.ecr.ap-southeast-1.amazonaws.com
@@ -60,6 +62,15 @@ jobs:
             echo "Docker pull completed..."
 
             echo "Running the container..."
+
+            sudo docker run -d --name pgadmin \
+              -e POSTGRES_USER=${{ secrets.POSTGRES_USER}} \
+              -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD}} \
+              -e POSTGRES_DB=${{ secrets.POSTGRES_DB}} \
+              -e PGADMIN_DEFAULT_EMAIL=${{ secrets.PGADMIN_DEFAULT_EMAIL}}@admin.com \
+              -e PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD}} \
+              -p 8080:80 dpage/pgadmin4:6.18
+
             sudo docker run -d \
               --name nest-api \
               -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
