@@ -21,4 +21,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Define the command to run your app
-CMD ["node", "dist/main"]
+CMD ["npx", "prisma", "migrate", "deploy", "&&", "node", "dist/main"]
