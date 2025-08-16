@@ -62,4 +62,5 @@ jobs:
             echo "Running the container..."
             sudo docker run -d \
               --name nest-api \
+              -e DATABASE_URL=${{ secrets.DATABASE_URL }}
               -p 80:3000 686255981564.dkr.ecr.ap-southeast-1.amazonaws.com/nest-api:latest
