@@ -69,7 +69,8 @@ jobs:
               -e POSTGRES_DB=${{ secrets.POSTGRES_DB}} \
               -e PGADMIN_DEFAULT_EMAIL=${{ secrets.PGADMIN_DEFAULT_EMAIL}} \
               -e PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD}} \
-              -p 8080:80 dpage/pgadmin4:6.18
+              -p 8080:80 dpage/pgadmin4:6.18 \
+              -v /data/pgadmin:/root/.pgadmin
 
             sudo docker run -d \
               --name nest-api \
